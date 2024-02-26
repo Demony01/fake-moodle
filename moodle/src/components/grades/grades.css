@@ -1,0 +1,58 @@
+.grades-text {
+    background-color: #DFE2ED;
+    height: 150px;
+    margin-bottom: 50px;
+}
+
+.grades-main {
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.text1-journal {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #929BA3;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.grades-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .grades-table th,
+  .grades-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .grades-table th {
+    background-color: #ACB1C1;
+    color: white;
+    height: 40px; 
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .grades-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .grades-table tbody tr:hover {
+    background-color: #e2f0ff;
+  }
+
+  .grades-table td:nth-child(3) {
+    text-align: left;
+    white-space: nowrap; 
+    width: 800px;
+  }
+  
+  .grades-table td:nth-child(3) span {
+    margin-right: 0;
+  }

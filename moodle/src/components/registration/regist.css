@@ -1,0 +1,125 @@
+.reg-text {
+    font-size: 25px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.register {
+    margin-top: 100px;
+    margin-left: 500px;
+    height: 1250px;
+    width: 600px;
+    border: 1px solid rgba(0, 0, 0, 0.50);
+    border-top: 2px solid rgba(7, 14, 205, 0.982);
+    border-radius: 12px 12px 0px 0px;
+    margin-bottom: 100px;
+}
+
+.avatar-reg img {
+    width: 25px;
+    height: 25px;
+    margin-right: 0;
+    margin-left: 25px;
+}
+
+.input-menu-reg {
+    margin-top: 20px;
+}
+
+
+.input-reg-gender input {
+    width: 5%;
+    margin-left: 20px;
+}
+
+
+.input-reg input {
+    width: 500px;
+    margin-left: 20px;
+    border: 0;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.50);
+    padding-bottom: 15px;
+    outline: 0;
+}
+
+.input-card-reg {
+    margin-bottom: 20px;
+}
+
+.btn-reg {
+    background-color: #0f7fba;
+    width: 80px;
+    height: 35px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 12px 12px 12px 12px;
+}
+
+.btn-reg-text {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 400;
+    border: none;
+    background-color: inherit;
+    margin-top: 2px;
+}
+
+.btns-remember-reg {
+    display: flex;
+    margin-top: 30px;
+
+}
+
+.remember-reg input {
+    float: left;
+    width: 30px;
+    display: flex;
+    margin-left: 17px;
+}
+
+.remember-text {
+    margin-right: 275px;
+
+}
+
+
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.suggestions-list li {
+    padding: 8px;
+    margin-left: 15px;
+    width: 495px;
+    cursor: pointer;
+    background-color: #e5e4e4;
+    transition: background-color 0.3s;
+}
+
+.suggestions-list li:hover {
+    background-color: #cecece;
+}
+
+.reg-type {
+    display: flex;
+    justify-content: center;
+}
+
+.reg-type button {
+    border: 0;
+    background: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.reg-type button:first-child {
+    border-right: 2px solid #000;
+}
+
+
+.student {
+    background-color: #0f7fba;
+}

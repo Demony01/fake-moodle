@@ -1,0 +1,60 @@
+.rating-text {
+    background-color: #DFE2ED;
+    height: 150px;
+    margin-bottom: 50px;
+}
+
+.rating-main {
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.rating-table {
+    width: 98%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin: 15px;
+}
+
+.rating-table th:last-child,
+.rating-table td:last-child {
+    width: 70px;
+    /* Изменено значение на 70px */
+    text-align: center;
+    /* Добавлено выравнивание по центру */
+}
+
+.rating-table th,
+.rating-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.rating-table td:nth-child(5) {
+    width: 70px;
+    text-align: center;
+}
+
+.rating-table th {
+    background-color: #ACB1C1;
+    color: white;
+}
+
+
+.custom-rating {
+    display: flex;
+}
+
+.star {
+    cursor: pointer;
+    font-size: 24px;
+    color: #ddd;
+    transition: color 0.3s;
+}
+
+.star:hover,
+.star.filled {
+    color: #ffc107;
+    /* Цвет звезды при наведении и заполненной */
+}
