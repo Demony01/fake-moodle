@@ -38,7 +38,7 @@ class Student(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     major = models.CharField(max_length=255)
     year = models.IntegerField()
-    clubs_in = models.ManyToManyField('InterestClub')
+    clubs_in = models.ManyToManyField('InterestClub', null=True)
     birth_date = models.DateField()
     address = models.CharField(max_length=256)
     gender = models.CharField(max_length=8,choices=gender)
