@@ -97,11 +97,15 @@ class CreateGroupView(generics.ListCreateAPIView):
         params = self.request.query_params
 
         teacher = params.get('teacher', None)
+        students = params.getlist('students', [])
 
         if teacher:
             queryset = queryset.filter(teacher__id=teacher)
+        if students:
+            queryset = queryset.filter(students__id__in=students)
 
         return queryset
+
 
 
 class DetailGroupView(generics.RetrieveUpdateDestroyAPIView):

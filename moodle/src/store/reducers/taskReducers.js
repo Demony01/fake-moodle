@@ -74,7 +74,7 @@ export const getCourseTC = (id) => async (dispatch) => {
     try {
         dispatch(clearCourseAC());
 
-        const groupResponses = await instance.get(`/create/group?student__id=${id}`);
+        const groupResponses = await instance.get(`/create/group?students=${id}`);
 
         if (groupResponses.data.length > 0) {
             dispatch(getGroupAC(groupResponses.data))

@@ -8,8 +8,10 @@ import white_cap from "./white-cap.svg"
 import { useEffect } from 'react';
 
 export default function Course(props) {
-    const [selectedCourse, setSelectedCourse] = useState(props.course.courseData[0]);
     
+
+    const [selectedCourse, setSelectedCourse] = useState(props.course.courseData[0]);
+
     useEffect(() => {
         setSelectedCourse(props.course.courseData[0]);
     }, [props.course.courseData]);
@@ -19,6 +21,10 @@ export default function Course(props) {
     };
 
     console.log(selectedCourse);
+
+    if (!props.course.courseData || props.course.courseData.length === 0) {
+        return <div>No courses available</div>;
+    }
 
     return (
         <div className="main__theme">
