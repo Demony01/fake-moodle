@@ -54,6 +54,7 @@ class Group(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
     students = models.ManyToManyField(Student, related_name='groups')
     curator = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True, related_name='curator_groups')
+    course = models.ManyToManyField('Course', null=True)
 
     def __str__(self):
         return self.name

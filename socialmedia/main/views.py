@@ -98,13 +98,18 @@ class CreateGroupView(generics.ListCreateAPIView):
 
         teacher = params.get('teacher', None)
         students = params.getlist('students', [])
+        course = params.getlist('course', [])
+
 
         if teacher:
             queryset = queryset.filter(teacher__id=teacher)
-        if students:
+        elif students:
             queryset = queryset.filter(students__id__in=students)
+        elif course:
+            queryset = queryset.filter(course__id__in=course)
 
         return queryset
+
 
 
 

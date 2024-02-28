@@ -45,16 +45,6 @@ class CreateGroupSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class GroupSerializer(serializers.ModelSerializer):
-    teacher = TeacherSerializer(read_only=True)
-    students = StudentSerializer(many=True, read_only=True)
-    curator = TeacherSerializer(read_only=True)
-
-    class Meta:
-        model = Group
-        fields = '__all__'
-
-
 class CreateInterestClubSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterestClub
@@ -99,6 +89,7 @@ class CourseSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer(read_only=True)
     students = StudentSerializer(many=True, read_only=True)
     lectures = LectureSerializer(many=True, read_only=True)
+
 
     class Meta:
         model = Course
@@ -180,5 +171,21 @@ class YearlyGradeSerializer(serializers.ModelSerializer):
     class Meta:
         model = YearlyGrade
         fields = '__all__'
+
+
+
+class CreateGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = '__all__'
         
 
+class GroupSerializer(serializers.ModelSerializer):
+    teacher = TeacherSerializer(read_only=True)
+    students = StudentSerializer(many=True, read_only=True)
+    curator = TeacherSerializer(read_only=True)
+    course = CourseSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Group
+        fields = '__all__'

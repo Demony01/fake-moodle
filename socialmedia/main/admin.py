@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import University,AssignmentType, Lecture
+from .models import University,AssignmentType, Lecture, Course, Group
 
 # Register your models here.
 
@@ -7,3 +7,5 @@ from .models import University,AssignmentType, Lecture
 admin.site.register(University)
 admin.site.register(AssignmentType)
 admin.site.register(Lecture)
+admin.site.register(Course)
+admin.site.register(Group)
