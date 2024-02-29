@@ -3,6 +3,9 @@ import Footer from "./components/footer/footer";
 import {Route, Routes} from "react-router";
 import Rating_Teacher from "./components/rating/rating";
 import './index.css'
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { checkTokenOnLoad } from './store/reducers/authReducers';
 import { LoginConnected } from "./components/login/loginContainer";
 import { HeaderConnected } from "./components/header/headerContainer";
 import { RegistConnected } from "./components/registration/registContainer";
@@ -17,6 +20,12 @@ import { JoinConnected } from "./components/join/joinContainer";
 
 
 function App() {
+  const dispatch = useDispatch();
+
+    useEffect(() => {
+        // Проверка токена при загрузке страницы
+        dispatch(checkTokenOnLoad());
+    }, [dispatch]);
   return (
     <div>
       <HeaderConnected /> 
