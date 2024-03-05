@@ -17,8 +17,8 @@ const localStore = {
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'http://127.0.0.1:8000/api/'
-})
+    baseURL: 'http://127.0.0.1:8000/api/',
+});
 
 export const CourseReducers = (state = localStore, action) => {
     switch (action.type) {

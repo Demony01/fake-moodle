@@ -10,10 +10,8 @@ const CoursesContainer = props => {
     useEffect(() => {
         console.log('useEffect is running');
 
-        // Set loading to true when the effect starts
         setLoading(true);
 
-        // Make the API call
         props.getCoursesTC(props.auth.data.id)
             .then(() => {
                 // Set loading to false when the data is successfully fetched

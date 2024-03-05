@@ -3,7 +3,8 @@ import "./grades.css";
 import { NavLink } from "react-router-dom";
 
 export default function Grades(props) {
-  console.log(props.grades.grades);
+  console.log(props.grades);
+  const grades = props.grades.gradesById.length !== 0 ? props.grades.gradesById : props.grades.grades
   return (
     <div className="grades-main">
       <div className="container">
@@ -34,12 +35,12 @@ export default function Grades(props) {
             </thead>
             <tbody>
               {
-                props.grades.grades.length === 0 ? <p style={{textAlign: 'center'}}>У вас пока нету оценок</p> : props.grades.grades.map((row) => (
+                grades.length === 0 ? <p style={{textAlign: 'center'}}>У вас пока нету оценок</p> : grades.map((row) => (
                   <tr key={row.id}>
                     <td>{row.id}</td>
                     <td>{row.course.title}</td>
                     <td>{row.related_grades.map((grades) => {
-                      return grades.score
+                      return `${grades.score} `
                     })}</td>
                     <td>{row.related_grades.length}</td>
                     <td>{row.average_score}</td>

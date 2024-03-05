@@ -2,6 +2,7 @@ import React from 'react';
 import './profile.css';
 import logo from './profile-logo.png'
 import { NavLink } from 'react-router-dom';
+import UpdateProfileForm from './form';
 
 
 export default function Profile(props) {
@@ -44,41 +45,11 @@ export default function Profile(props) {
                             </div>
                             <div className="edit-menu">
                                 <div className="btns">
-                                    <div className="btn-edit">
+                                    {/* <div className="btn-edit">
                                         <a href="#">Edit </a>
-                                    </div>
+                                    </div> */}
                                 </div>
-                                <div className="update-menu">
-                                    <div className="update-text">Profile update</div>
-                                    <div className="edit-input">
-                                        <div className="edit-text">Phone Number</div>
-                                        <div className="input">
-                                            <input type="text" placeholder='Enter phone number' />
-                                        </div>
-                                    </div>
-                                    <div className="edit-input">
-                                        <div className="edit-text">Email</div>
-                                        <div className="input">
-                                            <input type="text" placeholder='Enter email' />
-                                        </div>
-                                    </div>
-                                    <div className="update-text">Change Password</div>
-                                    <div className="edit-input">
-                                        <div className="edit-text">Password</div>
-                                        <div className="input">
-                                            <input type="text" placeholder='Enter password' />
-                                        </div>
-                                    </div>
-                                    <div className="edit-input">
-                                        <div className="edit-text">Confirm password</div>
-                                        <div className="input">
-                                            <input type="text" placeholder='Renter password' />
-                                        </div>
-                                    </div>
-                                    <div className="button-update">
-                                        <button className='button-update-text'>Update</button>
-                                    </div>
-                                </div>
+                                <UpdateProfileForm token={props.props.token} userId={props.props.data.id} change={props.change} />
                             </div>
                         </div>
                     </div>

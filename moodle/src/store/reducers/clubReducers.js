@@ -6,10 +6,15 @@ const localStore = {
     data: []
 };
 
+// Ваш код...
+
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'http://127.0.0.1:8000/api/'
-})
+    baseURL: 'http://127.0.0.1:8000/api/',
+});
+
+// Ваш код...
+
 
 
 export const ClubReducers = (state = localStore, action) => {

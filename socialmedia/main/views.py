@@ -135,9 +135,13 @@ class CreateCourseView(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = Course.objects.all()
         students = self.request.query_params.get('students', None)
+        lectures = self.request.query_params.getlist('lectures__id__in', [])
 
         if students:
             queryset = queryset.filter(students__id=students)
+
+        if lectures:
+            queryset = queryset.filter(lectures__id__in=lectures)
 
         return queryset
 
@@ -146,6 +150,7 @@ class CreateCourseView(generics.ListCreateAPIView):
 class DetailCourseView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+
 
 
 class CreateLectureView(generics.ListCreateAPIView):
@@ -161,6 +166,23 @@ class CreateAssignmentTypeView(generics.RetrieveUpdateDestroyAPIView):
 class CreateAssignmentView(generics.ListCreateAPIView):
     serializer_class = CreateAssignmentSerializer
     queryset = Assignment.objects.all()
+
+    def get_queryset(self):
+        queryset = Assignment.objects.all()
+        student = self.request.query_params.get('student', None)
+        course = self.request.query_params.get('course', None)
+        hometask = self.request.query_params.get('hometask', None)
+
+        if student:
+            queryset = queryset.filter(student__id=student)
+
+        if course:
+            queryset = queryset.filter(course__id=course)
+
+        if hometask:
+            queryset = queryset.filter(hometask__id=hometask)
+
+        return queryset
 
 
 class AssignmentView(generics.RetrieveUpdateDestroyAPIView):
@@ -205,9 +227,13 @@ class CreateGeneralGrade(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = YearlyGrade.objects.all()
         student = self.request.query_params.get('student', None)
+        course = self.request.query_params.get('course', None)
 
         if student:
             queryset = queryset.filter(student__id=student)
+
+        if course:
+            queryset = queryset.filter(course__id=course)
 
         return queryset
 

@@ -113,20 +113,19 @@ class Assignment(models.Model):
     hometask = models.ForeignKey(HomeTask, on_delete=models.SET_NULL, null=True)
     due_date = models.DateField(auto_now_add=True)
     file = models.FileField(upload_to='assignments/')
+    grade = models.ForeignKey('Grade', on_delete=models.SET_NULL, null=True, blank=True)
     assignment_type = models.ForeignKey(AssignmentType, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return str(self.due_date)
 
 class Grade(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     score = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
     feedback = models.TextField()
     is_resubmitted = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.student.user.username} - {self.assignment.due_date}"
+        return str(self.pk)
 
 
 class TeacherRating(models.Model):

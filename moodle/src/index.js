@@ -6,7 +6,6 @@ import {Provider} from "react-redux";
 import store from "./store/store";
 
 
-
 let Window = () => {
     ReactDOM.render(
         <Provider store={store}>

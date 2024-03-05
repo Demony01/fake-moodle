@@ -39,7 +39,7 @@ export default function Journal(props) {
                                 <td>{item.teacher.user}</td>
                                 <td>
                                     <NavLink
-                                        to="/grades"
+                                        to={`/grades/${item.id}`}
                                         className="journal-btn"
                                         onMouseEnter={() => setHoveredArrow(item.id)}
                                         onMouseLeave={() => setHoveredArrow(null)}

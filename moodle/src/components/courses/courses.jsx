@@ -19,7 +19,7 @@ export default function Course(props) {
     const handleCourseClick = (course) => {
         setSelectedCourse(course);
     };
-
+    
     console.log(selectedCourse);
 
     if (!props.course.courseData || props.course.courseData.length === 0) {
@@ -72,7 +72,7 @@ export default function Course(props) {
                                     <td>{lecture.task.date_start}</td>
                                     <td>{lecture.task.date_end}</td>
                                     <td>
-                                        <NavLink to={`/task/${selectedCourse.id}`} className="journal-btn">
+                                        <NavLink to={`/task/${selectedCourse.id}&${lecture.id}`} className="journal-btn">
                                             <img
                                                 className="arrow-image"
                                                 src={arrow}

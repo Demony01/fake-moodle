@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./task.css";
 import { NavLink } from "react-router-dom";
 import grad_cap from "./grad-cap.svg";
@@ -6,14 +6,33 @@ import white_cap from "./white-cap.svg";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import CourseSidebar from "../courses/courseSidebar";
+import { useLocation } from 'react-router-dom';
+import Loader from "../loader/loader";
 
 
 export default function Taskk(props) {
-  let data = props.course.un_courseData[0]
-  const courseData = data.lectures;
+  const [isLoading, setLoading] = useState(true);
+  const history = useLocation()
+  let data = props.course.courseData.find(item => item.id == props.taskId);
+  let zxc = data.lectures;
+  let courseData = zxc.find(item => item.id == props.lectureId);
+  console.log(props);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      await props.getTaskData(props.taskId, courseData.task.id, props.userId);
+      setLoading(false);
+    };
 
+    fetchData();
+  }, []);
+  let endDate = new Date(data.lectures[0].task.date_end);
+  let currentDate = new Date();
+  let dateDifferenceInMilliseconds = endDate - currentDate;
+  let dateDifferenceInDays = Math.ceil(dateDifferenceInMilliseconds / (1000 * 60 * 60 * 24));
+      
   const [selectedItem, setSelectedItem] = useState(1);
-  const [selectedCourseTitle, setSelectedCourseTitle] = useState(courseData[0].title);
+  const [selectedCourseTitle, setSelectedCourseTitle] = useState(courseData.title);
   const [draggedOver, setDraggedOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
@@ -38,13 +57,11 @@ export default function Taskk(props) {
     filesArray.forEach((file, index) => {
       formData.append(`file`, file);
     });
-  
-    // Append other data to formData as needed (e.g., student ID, assignment type, etc.)
     formData.append('student', props.userId);
     formData.append('assignment_type', 2);
-    formData.append('hometask', data.lectures[0].task.id);
-    formData.append('course', props.course.un_courseData[0].id);
-  
+    formData.append('hometask', courseData.task.id);
+    formData.append('course', props.taskId);
+    
     // Call the sendAnswer function with formData
     props.sendAnswer(formData);
   };
@@ -94,8 +111,14 @@ export default function Taskk(props) {
     });
   };
 
+  let grades = props.grade && props.grade[0] ? props.grade[0] : null;
+
 
   return (
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
     <div className="task-main">
       <div className="container">
         <div className="main">
@@ -112,10 +135,12 @@ export default function Taskk(props) {
             <div className="text2" style={{'textTransform': 'uppercase'}}>{data.title}</div>
           </div>
           <div className="main-task-menu">
-            <CourseSidebar courseData={courseData} selectedItem={selectedItem} handleItemClick={handleItemClick} />
+            <CourseSidebar courseData={zxc} selectedItem={selectedItem} handleItemClick={handleItemClick} />
             <div className="task-menu">
               <div className="text2" id="otvet2">
-                {data.lectures[0].title}
+                {courseData.title}
+                <br /> Описание: {courseData.content}
+                <br /> Файл: <a href={courseData.file}>Скачать</a>
               </div>
               <div className="text2" id="otvet">
                 СОСТОЯНИЕ ОТВЕТА
@@ -124,30 +149,48 @@ export default function Taskk(props) {
                 <tbody>
                 <tr>
                     <td className="table-label">Дата назначения задания:</td>
-                    <td>{data.lectures[0].task.date_start}</td>
+                    <td>{courseData.task.date_start}</td>
                   </tr>
                   <tr>
                     <td className="table-label">Дата завершения задания:</td>
-                    <td>{data.lectures[0].task.date_end}</td>
+                    <td>{courseData.task.date_end}</td>
                   </tr>
                   <tr>
                     <td className="table-label">Статус ответа:</td>
-                    <td>В процессе</td>
+                    <td>{grades && grades.file != null ? "Отправлен" : "Ожидание"}</td>
                   </tr>
+
                   <tr>
                     <td className="table-label">Оценка:</td>
-                    <td>Без оценки</td>
+                    <td>{grades && grades.grade !== null ? `${grades.grade.score}/100` : "Ожидание"}</td>
                   </tr>
                   <tr>
                     <td className="table-label">Оставшееся время:</td>
-                    <td>3 дня</td>
+                    <td>
+                      {grades &&
+                      grades.due_date !== null &&
+                      grades.due_date !== undefined
+                        ? dateDifferenceInDays < 0
+                          ? `Вы просрочили на ${(dateDifferenceInDays) * -1} дня`
+                          : `Осталось ${dateDifferenceInDays} дня`
+                        : "Не указано"}
+                    </td>
                   </tr>
                   <tr>
                     <td className="table-label">Прикрепленный файл:</td>
-                    <td>file</td>
+                    <td>
+                      {grades &&
+                      grades.file !== null &&
+                      grades.file !== undefined
+                        ? <a href={grades.file}>Скачать ответ</a>
+                        : "Ожидание"}
+                    </td>
                   </tr>
                 </tbody>
               </table>
+              {grades &&
+                grades.file !== null &&
+                grades.file !== undefined ? null : <>
               <div className={`text2 ${draggedOver ? 'dragged-over' : ''}`} id="otvet">
                 ВАШ ОТВЕТ
                 <div
@@ -224,10 +267,12 @@ export default function Taskk(props) {
                   </tbody>
                 </table>
               )}
+              </>}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div>)}
+    </>
   );
 }

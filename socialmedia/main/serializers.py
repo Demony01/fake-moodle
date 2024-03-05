@@ -102,26 +102,26 @@ class AssignmentTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
        
        
+
+
+class GradeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Grade
+        fields = '__all__'
+
 class CreateAssignmentSerializer(serializers.ModelSerializer):
+    grade = GradeSerializer(read_only=True)
     class Meta:
         model = Assignment
         fields = '__all__'
-
 
 class AssignmentSerializer(serializers.ModelSerializer):
     course = CourseSerializer(read_only=True)
     assignment_type = AssignmentTypeSerializer(read_only=True)
+    grade = GradeSerializer()
 
     class Meta:
         model = Assignment
-        fields = '__all__'
-
-class GradeSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(read_only=True)
-    assignment = AssignmentSerializer(read_only=True)
-
-    class Meta:
-        model = Grade
         fields = '__all__'
 
 

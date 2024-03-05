@@ -6,21 +6,20 @@ const LOGIN_STUDENT = 'LOGIN-STUDENT'
 const GET_UNIVERSITY = 'GET-UNIVERSITY'
 const GET_GROUP = 'GET-GROUP'
 const CLUB_STUDENT = 'CLUB-STUDENT'
+const CHANGE_USER_DATA = 'CHANGE-USER-DATA'
 
 const localStore = {
     userData: [],
     data: [],
+    token: [],
     uniData: [],
     groupData: []
 };
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'http://127.0.0.1:8000/api/',
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
-    },
-});
+    baseURL: 'http://127.0.0.1:8000/api/'
+})
 
 export const AuthReducers = ( state = localStore, action) => {
     switch(action.type) {
@@ -35,6 +34,11 @@ export const AuthReducers = ( state = localStore, action) => {
                 ...state,
                 userData: action.userData,
                 data:action.data
+            }
+        case SET_TOKEN:
+            return {
+                ...state,
+                token: action.data
             }
 
         case CLUB_STUDENT:
@@ -55,20 +59,21 @@ export const AuthReducers = ( state = localStore, action) => {
                 groupData: action.data
             }
 
+        case CHANGE_USER_DATA:
+            return {
+                ...state,
+                data: action.data
+            }
+
         default:
             return state
     }
 }
 
 const getUniversityAC = data => ({type: GET_UNIVERSITY, data})
-const setTokenAC = data => {
-    // Сохранение токена в localStorage
-    localStorage.setItem('token', data);
-
-    // Возвращаем объект с типом действия и данными
-    return { type: SET_TOKEN, data: data };
-};
+const setTokenAC = data => ({type: SET_TOKEN, data: data});
 const loginStudentAC = (data, userData) => ({type: LOGIN_STUDENT, userData: userData, data: data});
+const changeStudentAC = (data) => ({type: CHANGE_USER_DATA,  data: data});
 const clubAC = (userData) => ({type: CLUB_STUDENT, userData: userData})
 const getGroupAC = data => ({type: GET_GROUP, data: data})
 
@@ -100,55 +105,17 @@ export const registerUserTC = (data, type) => async dispatch => {
 };
 
 export const loginStudentTC = data => async dispatch => {
-    try {
-        // Отправка запроса для получения токена
-        let response = await instance.post('auth/token/', data);
-        dispatch(setTokenAC(response.data.access));
-
-        // Сохранение токена в localStorage
-        localStorage.setItem('token', response.data.access);
-
-        // Получение информации о пользователе
-        let headers = {'Authorization': `Bearer ${response.data.access}`};
-        let getToken = await instance.get('auth/users/me/', {headers: headers});
-
-        // Получение профиля студента
-        let getProfile = await instance.get(`create/student?user=${getToken.data.id}`);
-        let getProfileData = await instance.get(`student/${getProfile.data[0].id}`);
-
-        // Диспатч акции с данными о пользователе и профиле
-        dispatch(loginStudentAC(getProfileData.data, getToken.data));
-    } catch (error) {
-        console.error('Login failed:', error);
-    }
-};
-
-
-// Добавим новое действие для проверки токена при загрузке страницы
-export const checkTokenOnLoad = () => async dispatch => {
-    try {
-        const storedToken = localStorage.getItem('token');
-        if (storedToken) {
-            // Если токен найден в localStorage, устанавливаем его в axios
-            instance.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-
-            // Получение информации о пользователе
-            let headers = {'Authorization': `Bearer ${storedToken}`};
-            let getToken = await instance.get('auth/users/me/', {headers: headers});
-
-            // Получение профиля студента
-            let getProfile = await instance.get(`create/student?user=${getToken.data.id}`);
-            let getProfileData = await instance.get(`student/${getProfile.data[0].id}`);
-
-            // Диспатч акции с данными о пользователе и профиле
-            dispatch(loginStudentAC(getProfileData.data, getToken.data));
-        }
-    } catch (error) {
-        console.error('Error checking token on page load:', error);
-    }
-};
-
-
+    let response = await instance.post('auth/token/', data)
+    dispatch(setTokenAC(response.data.access))
+    setTimeout(async () => {
+        let headers = {'Authorization': `Bearer ${response.data.access}`}
+        let getToken = await instance.get('auth/users/me/', {headers: headers})
+        let getProfile = await instance.get(`create/student?user=${getToken.data.id}`)
+        let getProfileData = await instance.get(`student/${getProfile.data[0].id}`)
+        console.log(getProfileData.data);
+        dispatch(loginStudentAC(getProfileData.data, getToken.data))
+    })
+}
 
 export const loginTeacherTC = data => async dispatch => {
     let response = await instance.post('auth/token/', data)
@@ -195,4 +162,15 @@ export const getTeacherGroupTC = id => async dispatch => {
 export const joinClubTC = (id, clubId) => async dispatch => {
     let response = await instance.patch(`/student/${id}`, {clubs_in: [clubId]})
     dispatch(clubAC(response.data))
+}
+
+export const changeUserData = (token, email) => async dispatch => {
+    const response = await instance.patch('auth/users/me/', { email }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      dispatch(changeStudentAC(response.data));
 }
