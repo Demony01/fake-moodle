@@ -3,43 +3,45 @@ import "./group.css";
 import { NavLink } from 'react-router-dom';
 import arrow from '../journal/arrow.svg';
 import whiteArrow from '../journal/white-arrow.svg';
+import { useLocation } from 'react-router-dom';
 
-export default function Groups(props) {
-    const type = props.auth.data.type == "Teacher";
-    console.log(type);
+const Groupdata = props => {
+    const location = useLocation();
+    let groupId = location.pathname.split('/')[2];
+    let groupData = props.auth.groupData.find(item => item.id == groupId);
     const [hoveredArrow, setHoveredArrow] = useState(null);
-
     return (
         <div className="journal-main">
             <div className="container">
                 <div className="journal-text">
                     <div className="textnav">
                         <NavLink to="/" className="text1">Главная →</NavLink>
-                        <div className="text-vkladka">Ваши группы</div>
+                        <NavLink to="/groups" className="text-vkladka" id="texttttt">Ваши группы →</NavLink>
+                        <div className="text-vkladka">{groupData.name}</div>
                     </div>
-                    <div className="text2">ГРУППЫ</div>
+                    <div className="text2">{groupData.name}</div>
                 </div>
                 <table className="journal-table">
                     <thead>
                         <tr>
                             <th>№</th>
-                            <th>Группа</th>
-                            <th>Куратор</th>
-                            <th>Кол-во студентов</th>
-                            <th>Преподаватель</th>
-                            <th>Информация</th>
+                            <th>Дата рождения</th>
+                            <th>ФИО</th>
+                            <th>Университет</th>
+                            <th>Номер телефона</th>
+                            <th>Подробнее</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {props.groupData.length === 0 ? <p style={{textAlign: 'center'}}>У вас пока нету групп</p> : props.groupData.map((item) => (
+                    {props.auth.groupData.length === 0 ? <p style={{textAlign: 'center'}}>У вас пока нету групп</p> : groupData.students.map((item) => (
                             <tr key={item.id}>
                                 <td>{item.id}</td>
-                                <td>{item.name}</td>
-                                <td>{item.curator.last_name} {item.curator.first_name}</td>
-                                <td>{item.students.length}</td>
-                                <td>{item.teacher.last_name} {item.teacher.first_name}</td>
+                                <td>{item.birth_date}</td>
+                                <td>{item.last_name} {item.first_name}</td>
+                                <td>{item.university.name}</td>
+                                <td>{item.phone_number}</td>
                                 <td> <NavLink
-                                        to={type ? `/group-data/${item.id}` : "/grades"}
+                                        to={`/student/${item.id}`}
                                         className="journal-btn"
                                         onMouseEnter={() => setHoveredArrow(item.id)}
                                         onMouseLeave={() => setHoveredArrow(null)}
@@ -57,7 +59,9 @@ export default function Groups(props) {
                         ))}
                     </tbody>
                 </table>
-                </div>
+            </div>
         </div>
     );
 }
+
+export default Groupdata;

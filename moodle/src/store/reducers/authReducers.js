@@ -7,13 +7,17 @@ const GET_UNIVERSITY = 'GET-UNIVERSITY'
 const GET_GROUP = 'GET-GROUP'
 const CLUB_STUDENT = 'CLUB-STUDENT'
 const CHANGE_USER_DATA = 'CHANGE-USER-DATA'
+const GROUP_DATA = "GROUP-DATA"
+const STUDENT_DATA = "STUDENT-DATA"
 
 const localStore = {
     userData: [],
     data: [],
     token: [],
     uniData: [],
-    groupData: []
+    groupData: [],
+    teacherGroupData: [],
+    uniqueStudentData: []
 };
 
 const instance = axios.create({
@@ -64,6 +68,18 @@ export const AuthReducers = ( state = localStore, action) => {
                 ...state,
                 data: action.data
             }
+        
+        case GROUP_DATA:
+            return {
+                ...state,
+                teacherGroupData: action.data
+            }
+        
+        case STUDENT_DATA: 
+            return {
+                ...state,
+                uniqueStudentData: action.data
+            }
 
         default:
             return state
@@ -76,6 +92,8 @@ const loginStudentAC = (data, userData) => ({type: LOGIN_STUDENT, userData: user
 const changeStudentAC = (data) => ({type: CHANGE_USER_DATA,  data: data});
 const clubAC = (userData) => ({type: CLUB_STUDENT, userData: userData})
 const getGroupAC = data => ({type: GET_GROUP, data: data})
+const groupDataAC = data => ({type: GROUP_DATA, data: data})
+const getStudentDataAC = data => ({type: STUDENT_DATA, data: data})
 
 
 export const registerUserTC = (data, type) => async dispatch => {
@@ -173,4 +191,14 @@ export const changeUserData = (token, email) => async dispatch => {
       });
   
       dispatch(changeStudentAC(response.data));
+}
+
+export const getGroupDataTC = (id) => async dispatch => {
+    let response = await instance.get(`/group/${id}`)
+    dispatch(groupDataAC(response.data))
+}
+
+export const getStudentDataTC = (id) => async dispatch => {
+    let response = await instance.get(`/student/${id}`)
+    dispatch(getStudentDataAC(response.data));
 }

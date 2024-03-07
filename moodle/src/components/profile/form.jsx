@@ -16,7 +16,6 @@ const UpdateProfileForm = props => {
     password: Yup.string(),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
-      ,
   });
 
   const handleSubmit = (values) => {

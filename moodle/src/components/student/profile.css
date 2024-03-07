@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+
+}
+.text1 {
+    margin-left: 150px;
+    text-decoration: none;
+    color: #929BA3;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.text-vkladka {
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 5px;
+    margin-top: 20px;
+}
+
+.textnav {
+    display: flex;
+}
+
+.profile {
+    margin-top: 70px;
+}
+
+.profile-text {
+    background-color: #DFE2ED;
+    height: 150px;
+}
+
+.text2 {
+    margin-left: 150px;
+    font-size: 28px;
+    margin-top: 5px;
+}
+
+.text1 a {
+    margin-left: 150px;
+    text-decoration: none;
+    color: #929BA3;
+    font-size: 14px;
+}
+
+.profile {
+    margin-top: 70px;
+}
+
+.text2 {
+    margin-left: 150px;
+    font-size: 28px;
+    margin-top: 10px;
+}
+
+.avatar-menu {
+    height: 115px;
+    width: 40%;
+    margin-top: 10px;
+    margin-left: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.50);
+    background: #FFFDFD;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+}
+
+.avatar img {
+    width: 120px;
+    height: 100px;
+    margin-left: 20px;
+}
+
+.name-text {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 40px;
+    margin-left: 20px;
+}
+
+.uni-text {
+    color: #929BA3;
+    font-size: 17px;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.info-menu {
+    width: 40%;
+    height: 500px;
+    border: 1px solid rgba(0, 0, 0, 0.50);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 20px;
+}
+
+.info-card {
+    width: 80%;
+    height: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.50);
+    background: #FFF;
+    margin-left: 44px;
+    margin-top: 30px;
+}
+
+.base-text {
+    font-size: 17px;
+    font-weight: 700;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.gmail-text a {
+    color: #2C91EE;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 30px;
+}
+
+.gmail-text {
+    margin-top: 10px;
+}
+
+.info-text {
+    font-size: 17px;
+    font-weight: 500;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.info-main {
+    display: flex;
+}
+
+.btns {
+    display: flex;
+}
+
+.btn-edit {
+    width: 50px;
+    height: 35px;
+    border: 0.5px solid rgba(0, 0, 0, 0.80);
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.btn-edit a {
+    color: #929BA3;
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn-grades {
+    width: 85px;
+    height: 35px;
+    border: 0.5px solid rgba(0, 0, 0, 0.80);
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    margin-left: 10px;
+}
+
+.btn-grades a {
+    color: #929BA3;
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.update-menu {
+    width: 250px;
+    height: 250px;
+    margin-left: 100px;
+}
+
+.update-text {
+    color: #929BA3;
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 270px;
+    width: 70%;
+    margin-top: 25px;
+}
+
+.edit-text {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+input {
+    width: 600px;
+    height: 20px;
+    border: 0.5px solid rgba(0, 0, 0, 0.80);
+    background: #FFF;
+    margin-left: 50px;
+}
+
+input,
+input::placeholder {
+    font-size: 18px;
+}
+
+.button-update {
+    background-color: #1B597A;
+    width: 80px;
+    height: 35px;
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.button-update-text {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 400;
+    border: none;
+    background-color: inherit;
+    margin-top: 5px;
+}
