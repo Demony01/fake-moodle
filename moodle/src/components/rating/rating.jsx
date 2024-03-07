@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import './rating.css'; // Создайте файл стилей rating.css и добавьте необходимые стили
+import './rating.css';
 import { NavLink } from 'react-router-dom';
 
 
 const teachersData = [
   { id: 1, name: 'Асанали Токенов', subject: 'Python', rating: 5 },
   { id: 2, name: 'Биржан Турсын', subject: 'БД', rating: 5 },
-  // Добавьте дополнительные записи, если необходимо
 ];
 
 export default function RatingTeacher() {
   const [teacherRatings, setTeacherRatings] = useState(teachersData);
 
   const handleRatingChange = (value, teacherId) => {
-    // Обновляем оценку преподавателя в массиве
     const updatedRatings = teacherRatings.map((teacher) =>
       teacher.id === teacherId ? { ...teacher, rating: value } : teacher
     );

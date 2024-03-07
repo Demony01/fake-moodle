@@ -3,6 +3,7 @@ import axios from 'axios';
 const GET_GRADES = 'GET-GRADES';
 const GET_TASK_DATA = 'GET-TASK-DATA';
 const GET_GRADES_BY_ID = 'GET-GRADES-BY-ID';
+const RATING = "RATING"
 
 const localStore = {
     grades: [],
@@ -41,6 +42,7 @@ export const GradesReducers = (state = localStore, action) => {
 const getGradesAC = data => ({type: GET_GRADES, data})
 const getTaskDataAC = data => ({type: GET_TASK_DATA, data})
 const getGradesByIdAC = data => ({type: GET_GRADES_BY_ID, data})
+const RatingAC = data => ({type: RATING, data})
 
 export const getGradeTC = (id) => async (dispatch) => {
     try {
@@ -100,3 +102,4 @@ export const getGradeByIdTC123 = (id, userId) => async (dispatch) => {
         console.log('Error');
     }
 }
+

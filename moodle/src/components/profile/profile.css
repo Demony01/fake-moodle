@@ -230,3 +230,37 @@ input::placeholder {
     background-color: inherit;
     margin-top: 5px;
 }
+
+.card__btn {
+    margin: 0 auto;
+    margin-top: 20px;
+    box-sizing: border-box;
+    appearance: none;
+    color: #000;
+    background-color: transparent;
+    border: 2px solid #e74c3c;
+    border-radius: 0.6em;
+    cursor: pointer;
+    display: flex;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    padding: 1.2em 2.8em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+.card__btn:hover, .card__btn:focus {
+    color: #000;
+    outline: 0;
+}
+
+.card__btn {
+    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+}
+.card__btn:hover {
+    box-shadow: 0 0 40px 40px #e74c3c inset;
+}

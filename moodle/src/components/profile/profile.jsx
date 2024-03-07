@@ -42,6 +42,7 @@ export default function Profile(props) {
                                     <div className="base-text">Адрес</div>
                                     <div className="info-text">{props.props.data.address}</div>
                                 </div>
+                                <button onClick={props.logout} className="card__btn">Выйти</button>
                             </div>
                             <div className="edit-menu">
                                 <div className="btns">

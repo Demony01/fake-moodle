@@ -59,6 +59,7 @@ const Groupdata = props => {
                         ))}
                     </tbody>
                 </table>
+                <button >Добавить Лекцию</button>
             </div>
         </div>
     );

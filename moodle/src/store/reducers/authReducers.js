@@ -9,16 +9,18 @@ const CLUB_STUDENT = 'CLUB-STUDENT'
 const CHANGE_USER_DATA = 'CHANGE-USER-DATA'
 const GROUP_DATA = "GROUP-DATA"
 const STUDENT_DATA = "STUDENT-DATA"
+const LOGOUT_USER = 'LOGOUT-USER';
 
 const localStore = {
-    userData: [],
-    data: [],
+    userData: JSON.parse(localStorage.getItem('data')) || [],
+    data: JSON.parse(localStorage.getItem('userData')) || [],
     token: [],
     uniData: [],
     groupData: [],
     teacherGroupData: [],
     uniqueStudentData: []
 };
+
 
 const instance = axios.create({
     withCredentials: true,
@@ -27,6 +29,15 @@ const instance = axios.create({
 
 export const AuthReducers = ( state = localStore, action) => {
     switch(action.type) {
+        case LOGOUT_USER:
+            localStorage.removeItem('userData');
+            localStorage.removeItem('data');
+            return {
+                ...state,
+                userData: [],
+                token: [],
+                data: [],
+            };
         case REGISTER_USER:
             return {
                 ...state,
@@ -86,6 +97,7 @@ export const AuthReducers = ( state = localStore, action) => {
     }
 }
 
+const logoutUserAC = () => ({ type: LOGOUT_USER });
 const getUniversityAC = data => ({type: GET_UNIVERSITY, data})
 const setTokenAC = data => ({type: SET_TOKEN, data: data});
 const loginStudentAC = (data, userData) => ({type: LOGIN_STUDENT, userData: userData, data: data});
@@ -118,19 +130,26 @@ export const registerUserTC = (data, type) => async dispatch => {
                 'address': data['address']
             }
             let resp = await instance.post(`create/${type}`, dataForStudent)
+            localStorage.setItem('userData', JSON.stringify(resp.data));
+            localStorage.setItem('data', JSON.stringify(response.data))
+            localStorage.setItem('token', response.data.access);
+
             dispatch(loginStudentAC(resp.data, response.data))
         })
 };
 
 export const loginStudentTC = data => async dispatch => {
-    let response = await instance.post('auth/token/', data)
-    dispatch(setTokenAC(response.data.access))
+    let response = await instance.post('auth/token/', data);
+    dispatch(setTokenAC(response.data.access));
     setTimeout(async () => {
         let headers = {'Authorization': `Bearer ${response.data.access}`}
         let getToken = await instance.get('auth/users/me/', {headers: headers})
         let getProfile = await instance.get(`create/student?user=${getToken.data.id}`)
         let getProfileData = await instance.get(`student/${getProfile.data[0].id}`)
         console.log(getProfileData.data);
+        localStorage.setItem('userData', JSON.stringify(getProfileData.data));
+        localStorage.setItem('data', JSON.stringify(getToken.data))
+        localStorage.setItem('token', response.data.access);
         dispatch(loginStudentAC(getProfileData.data, getToken.data))
     })
 }
@@ -144,6 +163,9 @@ export const loginTeacherTC = data => async dispatch => {
         let getProfile = await instance.get(`create/teacher?user=${getToken.data.id}`)
         let getProfileData = await instance.get(`teacher/${getProfile.data[0].id}`)
         console.log(getProfileData.data);
+        localStorage.setItem('userData', JSON.stringify(getProfileData.data));
+        localStorage.setItem('data', JSON.stringify(getToken.data))
+        localStorage.setItem('token', response.data.access);
         dispatch(loginStudentAC(getProfileData.data, getToken.data))
     })
 }
@@ -177,6 +199,8 @@ export const getTeacherGroupTC = id => async dispatch => {
 }
 
 
+
+
 export const joinClubTC = (id, clubId) => async dispatch => {
     let response = await instance.patch(`/student/${id}`, {clubs_in: [clubId]})
     dispatch(clubAC(response.data))
@@ -202,3 +226,8 @@ export const getStudentDataTC = (id) => async dispatch => {
     let response = await instance.get(`/student/${id}`)
     dispatch(getStudentDataAC(response.data));
 }
+
+export const logoutUserTC = () => async (dispatch) => {
+    dispatch(logoutUserAC());
+    
+};
