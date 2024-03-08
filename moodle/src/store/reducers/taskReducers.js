@@ -6,13 +6,16 @@ const CLEAR_COURSE = 'CLEAR-COURSE';
 const GET_COURSE_ID = 'GET-COURSE-ID';
 const SEND_ANSWER = 'SEND-ANSWER';
 const GET_GROUP = 'GET-GROUP';
+const SET_COURSE = 'SET-COURSE'
+const TEACHER_COURSE = "TEACHER-COURSE"
 
 const localStore = {
     data: [],
     courseData: [],
     groupData: [],
     un_courseData: [],
-    answer: []
+    answer: [],
+    teacherCourse: [],
 };
 
 const instance = axios.create({
@@ -57,6 +60,13 @@ export const CourseReducers = (state = localStore, action) => {
                 ...state,
                 answer: action.data
             }
+        
+        case TEACHER_COURSE:
+            return {
+                ...state,
+                teacherCourse: action.data        
+            }
+
 
         default:
             return state;
@@ -69,6 +79,7 @@ const getCourseByIdAC = data => ({type: GET_COURSE_ID, data})
 const getGroupAC = data => ({type: GET_GROUP, data})
 const clearCourseAC = () => ({type: CLEAR_COURSE});
 const sendAnswerAC = data => ({type: SEND_ANSWER, data});
+const setTeacherCourse = data => ({type: TEACHER_COURSE, data})
 
 export const getCourseTC = (id) => async (dispatch) => {
     try {
@@ -133,3 +144,10 @@ export const SendAnswerTC = (data) => async (dispatch) => {
     console.log(response.data);
     dispatch(sendAnswerAC(response.data))
 }
+
+
+export const getCourseBy123IdTC = id => async dispatch => {
+    let response = await instance.get(`create/course?teacher=${id}`)
+    dispatch(setTeacherCourse(response.data))
+}
+

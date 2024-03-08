@@ -88,9 +88,15 @@ class LectureSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer(read_only=True)
     students = StudentSerializer(many=True, read_only=True)
-    lectures = LectureSerializer(many=True, read_only=True)
+    lectures = LectureSerializer(many=True)
 
 
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+
+class NICECourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'

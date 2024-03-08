@@ -17,6 +17,7 @@ import { GroupConnected } from "./components/groups/groupsContainer";
 import { JoinConnected } from "./components/join/joinContainer";
 import { TeacherGroupConnected } from "./components/groupdata/groupdataContainer";
 import { StudentConnected } from "./components/student/studentContainer";
+import { AddConnected } from "./components/addlecture/addContainer";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route exact path="/join/:id" element={<JoinConnected />} />
         <Route exact path="/group-data/:id" element={<TeacherGroupConnected />} />
         <Route exact path="/student/:id" element={<StudentConnected />} />
+        <Route exact path="/add-lecture" element={<AddConnected />}/>
       </Routes>
       <Footer />
     </div>

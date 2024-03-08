@@ -6,9 +6,7 @@ import whiteArrow from '../journal/white-arrow.svg';
 
 export default function Groups(props) {
     const type = props.auth.data.type == "Teacher";
-    console.log(type);
     const [hoveredArrow, setHoveredArrow] = useState(null);
-
     return (
         <div className="journal-main">
             <div className="container">

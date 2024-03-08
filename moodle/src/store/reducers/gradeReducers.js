@@ -7,7 +7,7 @@ const RATING = "RATING"
 
 const localStore = {
     grades: [],
-    gradesById: []
+    gradesById: [],
 };
 
 const instance = axios.create({
@@ -103,3 +103,21 @@ export const getGradeByIdTC123 = (id, userId) => async (dispatch) => {
     }
 }
 
+export const AddLectureTC = (formData, data, id, lectures) => async dispatch => {
+    const headers = {
+        'accept': 'application/json',
+        'Accept-Language': 'en-US,en;q=0.8',
+        'Content-Type': `multipart/form-data`,
+    }
+    let response = await instance.post('create/task', data)
+    console.log(response);
+    setTimeout(async () => {
+        formData.append("task", response.data.id)
+        let responses = await instance.post('create/lecture', formData, headers)
+        setTimeout(async () => {
+            lectures.push(responses.data.id)
+            let responsesss = await instance.patch(`change/course/${id}`, {lectures: lectures})
+            console.log(responsesss);
+        }, 100)
+    }, 100)
+}

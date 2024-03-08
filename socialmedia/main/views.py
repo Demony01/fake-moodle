@@ -5,7 +5,7 @@ from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import HomeTaskSerializer, CreateLectureSerializer, CreateYearlyGradeSerializer, UniversitySerializer, TeacherSerializer, CreateTeacherSerializer, StudentSerializer, CreateStudentSerializer, CreateGroupSerializer, GroupSerializer, CreateInterestClubSerializer, InterestClubSerializer, CourseSerializer, CreateCourseSerializer, CreateAssignmentSerializer, AssignmentSerializer, GradeSerializer, CreateGradeSerializer, LectureSerializer, AssignmentTypeSerializer, CreateTeacherRatingSerializer, TeacherRatingSerializer,CreateStudentRatingSerializer,StudentRatingSerializer, GradeSerializer,YearlyGradeSerializer
+from .serializers import NICECourseSerializer , HomeTaskSerializer, CreateLectureSerializer, CreateYearlyGradeSerializer, UniversitySerializer, TeacherSerializer, CreateTeacherSerializer, StudentSerializer, CreateStudentSerializer, CreateGroupSerializer, GroupSerializer, CreateInterestClubSerializer, InterestClubSerializer, CourseSerializer, CreateCourseSerializer, CreateAssignmentSerializer, AssignmentSerializer, GradeSerializer, CreateGradeSerializer, LectureSerializer, AssignmentTypeSerializer, CreateTeacherRatingSerializer, TeacherRatingSerializer,CreateStudentRatingSerializer,StudentRatingSerializer, GradeSerializer,YearlyGradeSerializer
 from .models import HomeTask,University, YearlyGrade, Teacher, Student, Group, InterestClub, Course, Grade, Assignment, AssignmentType, Lecture, TeacherRating, StudentRating
 
 
@@ -135,6 +135,7 @@ class CreateCourseView(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = Course.objects.all()
         students = self.request.query_params.get('students', None)
+        teacher = self.request.query_params.get('teacher', None)
         lectures = self.request.query_params.getlist('lectures__id__in', [])
 
         if students:
@@ -143,8 +144,15 @@ class CreateCourseView(generics.ListCreateAPIView):
         if lectures:
             queryset = queryset.filter(lectures__id__in=lectures)
 
+        if teacher:
+            queryset = queryset.filter(teacher__id=teacher)
+
         return queryset
 
+
+class NICECourseView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = NICECourseSerializer
+    queryset = Course.objects.all()
 
 
 class DetailCourseView(generics.RetrieveUpdateDestroyAPIView):

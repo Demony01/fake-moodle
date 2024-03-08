@@ -26,6 +26,7 @@ urlpatterns = [
      
     path('create/course', views.CreateCourseView.as_view()),
     path('course/<int:pk>', views.DetailCourseView.as_view()),
+    path('change/course/<int:pk>', views.NICECourseView.as_view()),
     
     path('create/lecture', views.CreateLectureView.as_view()),
     

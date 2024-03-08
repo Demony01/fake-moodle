@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./group.css";
 import { NavLink } from 'react-router-dom';
 import arrow from '../journal/arrow.svg';
@@ -9,6 +9,7 @@ const Groupdata = props => {
     const location = useLocation();
     let groupId = location.pathname.split('/')[2];
     let groupData = props.auth.groupData.find(item => item.id == groupId);
+    
     const [hoveredArrow, setHoveredArrow] = useState(null);
     return (
         <div className="journal-main">
@@ -59,7 +60,7 @@ const Groupdata = props => {
                         ))}
                     </tbody>
                 </table>
-                <button >Добавить Лекцию</button>
+                <NavLink to={"/add-lecture"} className="btn fifth">Добавить Лекцию</NavLink>
             </div>
         </div>
     );

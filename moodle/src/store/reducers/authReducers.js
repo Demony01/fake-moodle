@@ -10,6 +10,7 @@ const CHANGE_USER_DATA = 'CHANGE-USER-DATA'
 const GROUP_DATA = "GROUP-DATA"
 const STUDENT_DATA = "STUDENT-DATA"
 const LOGOUT_USER = 'LOGOUT-USER';
+const ADD_NEW_LECTURE = "ADD-NEW-LECTURE"
 
 const localStore = {
     userData: JSON.parse(localStorage.getItem('data')) || [],
@@ -18,7 +19,8 @@ const localStore = {
     uniData: [],
     groupData: [],
     teacherGroupData: [],
-    uniqueStudentData: []
+    uniqueStudentData: [],
+    groupDataAddNewLecture: []
 };
 
 
@@ -91,6 +93,12 @@ export const AuthReducers = ( state = localStore, action) => {
                 ...state,
                 uniqueStudentData: action.data
             }
+        
+        case ADD_NEW_LECTURE:
+            return {
+                ...state,
+                groupDataAddNewLecture: action.data
+            }
 
         default:
             return state
@@ -106,6 +114,7 @@ const clubAC = (userData) => ({type: CLUB_STUDENT, userData: userData})
 const getGroupAC = data => ({type: GET_GROUP, data: data})
 const groupDataAC = data => ({type: GROUP_DATA, data: data})
 const getStudentDataAC = data => ({type: STUDENT_DATA, data: data})
+const addNewLectureAC = data => ({type: ADD_NEW_LECTURE, data:data})
 
 
 export const registerUserTC = (data, type) => async dispatch => {
@@ -231,3 +240,9 @@ export const logoutUserTC = () => async (dispatch) => {
     dispatch(logoutUserAC());
     
 };
+
+
+
+export const pushGroupDataTC = (data) => async dispatch => {
+    dispatch(addNewLectureAC(data))
+}

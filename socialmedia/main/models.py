@@ -89,11 +89,12 @@ class Lecture(models.Model):
 
     def __str__(self):
         return self.title
+        
 
 class HomeTask(models.Model):
     text = models.TextField()
-    file = models.FileField(upload_to='task/', null=True)
-    date_start = models.DateField()
+    # file = models.FileField(upload_to='task/', null=True)
+    date_start = models.DateField(auto_now_add=True)
     date_end = models.DateField()
 
     def __str__(self):
