@@ -1,8 +1,10 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from "react-router-dom";
 
 const UpdateProfileForm = props => {
+  const navigate = useNavigate();
   const initialValues = {
     phoneNumber: '',
     email: '',
@@ -20,7 +22,10 @@ const UpdateProfileForm = props => {
 
   const handleSubmit = (values) => {
     props.change(props.token, values.email);
-    window.location.reload();
+    setTimeout(() => {
+      navigate('/login')
+      window.location.reload();
+    }, 500);
   };
 
   return (

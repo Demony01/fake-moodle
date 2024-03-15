@@ -17,21 +17,21 @@ import { useEffect } from "react";
 
 const SuggestionsList = ({ suggestions, onSelect }) => (
     <ul className="suggestions-list">
-      {suggestions.map((university) => (
-        <li key={university.id} onClick={() => onSelect(university)}>
-          {university.name}
-        </li>
-      ))}
+        {suggestions.map((university) => (
+            <li key={university.id} onClick={() => onSelect(university)}>
+                {university.name}
+            </li>
+        ))}
     </ul>
-  );
-  
+);
+
 
 export default function Registration(props) {
     const navigate = useNavigate();
     useEffect(() => {
         props.getUniversity()
     }, []);
-    const [type, setType] = useState(null);
+    const [type, setType] = useState("student");
     const initialValues = {
         username: "",
         email: "",
@@ -50,7 +50,7 @@ export default function Registration(props) {
 
     const [universitySuggestions, setUniversitySuggestions] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-      
+
     const validationSchema = Yup.object({
         username: Yup.string().required("Required"),
         email: Yup.string().email("Invalid email address").required("Required"),
@@ -74,7 +74,7 @@ export default function Registration(props) {
         const value = event.target.value;
         formik.handleChange(event);
         setSearchTerm(value);
-    
+
         if (props.props.uniData && Array.isArray(props.props.uniData)) {
             setUniversitySuggestions(
                 props.props.uniData.filter((university) =>
@@ -85,8 +85,8 @@ export default function Registration(props) {
             setUniversitySuggestions([]);
         }
     };
-    
-    
+
+
 
     const handleSuggestionSelect = (university, formik) => {
         setSearchTerm(university.name);
@@ -94,10 +94,10 @@ export default function Registration(props) {
         formik.setFieldValue('university', university.name);
         formik.setFieldValue('universityId', university.id);
     };
-    
-      
+
+
     console.log(type);
-      
+
 
     return (
         <div className="register">
@@ -105,7 +105,13 @@ export default function Registration(props) {
                 <div className="register-menu">
                     <div className="reg-text">РЕГИСТРАЦИЯ</div>
                     <div className="reg-type">
-                    <button onClick={() => setType('teacher')}>Учитель</button> <button className="student" onClick={() => setType('student')}>Ученик</button>
+                        <button onClick={() => setType('teacher')} className={type === 'teacher' ? 'selected' : ''}>
+                            Учитель
+                        </button>
+                        <div className="login-line">|</div>
+                        <button onClick={() => setType('student')} className={type === 'student' ? 'selected' : ''}>
+                            Ученик
+                        </button>
                     </div>
                     <div className="input-menu-reg">
                         <Formik
@@ -169,56 +175,56 @@ export default function Registration(props) {
                                             </div>
                                         </div>
                                         <div className="input-card-reg">
-          <div className="avatar-reg">
-            <img src={univer} alt="" />
-          </div>
-          <div className="input-reg">
-            <Field
-              component="input"
-              name="university"
-              type="text"
-              placeholder="Университет"
-              value={searchTerm}
-              onChange={(e) => handleUniversityChange(e, formik)}
-            />
-            {universitySuggestions.length > 0 && (
-              <SuggestionsList
-                suggestions={universitySuggestions}
-                onSelect={(university) => handleSuggestionSelect(university, formik)}
-              />
-            )}
-          </div>
-        </div>
-        {type === 'student' && (
-                      <div>
-                        <div className="input-card-reg">
-                          <div className="avatar-reg">
-                            <img src={year} alt="" />
-                          </div>
-                          <div className="input-reg">
-                            <Field
-                              component="input"
-                              name="year"
-                              type="text"
-                              placeholder="Курс"
-                            />
-                          </div>
-                        </div>
-                        <div className="input-card-reg">
-                          <div className="avatar-reg">
-                            <img src={major} alt="" />
-                          </div>
-                          <div className="input-reg">
-                            <Field
-                              component="input"
-                              name="major"
-                              type="text"
-                              placeholder="Специальность"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                                            <div className="avatar-reg">
+                                                <img src={univer} alt="" />
+                                            </div>
+                                            <div className="input-reg">
+                                                <Field
+                                                    component="input"
+                                                    name="university"
+                                                    type="text"
+                                                    placeholder="Университет"
+                                                    value={searchTerm}
+                                                    onChange={(e) => handleUniversityChange(e, formik)}
+                                                />
+                                                {universitySuggestions.length > 0 && (
+                                                    <SuggestionsList
+                                                        suggestions={universitySuggestions}
+                                                        onSelect={(university) => handleSuggestionSelect(university, formik)}
+                                                    />
+                                                )}
+                                            </div>
+                                        </div>
+                                        {type === 'student' && (
+                                            <div>
+                                                <div className="input-card-reg">
+                                                    <div className="avatar-reg">
+                                                        <img src={year} alt="" />
+                                                    </div>
+                                                    <div className="input-reg">
+                                                        <Field
+                                                            component="input"
+                                                            name="year"
+                                                            type="text"
+                                                            placeholder="Курс"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="input-card-reg">
+                                                    <div className="avatar-reg">
+                                                        <img src={major} alt="" />
+                                                    </div>
+                                                    <div className="input-reg">
+                                                        <Field
+                                                            component="input"
+                                                            name="major"
+                                                            type="text"
+                                                            placeholder="Специальность"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                         <div className="input-card-reg">
                                             <div className="avatar-reg">
                                                 <img src={birth} alt="" />

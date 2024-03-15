@@ -222,8 +222,11 @@ export const changeUserData = (token, email) => async dispatch => {
           'Authorization': `Bearer ${token}`,
         },
       });
-  
-      dispatch(changeStudentAC(response.data));
+    localStorage.setItem('data', JSON.stringify([]));
+    localStorage.setItem('userData', JSON.stringify([]));
+    localStorage.setItem('token', JSON.stringify([]));
+
+    dispatch(changeStudentAC(response.data));
 }
 
 export const getGroupDataTC = (id) => async dispatch => {

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login(props) {
     const navigate = useNavigate()
-    const [type, setType] = useState(null);
+    const [type, setType] = useState("student");
     const initialValues = {
         username: '',
         password: '',
@@ -34,8 +34,15 @@ export default function Login(props) {
                 <div className="login-menu">
                     <div className="login-text">ВХОД</div>
                     <div className="reg-type">
-                    <button onClick={() => setType('teacher')}>Учитель</button> <button onClick={() => setType('student')}>Ученик</button>
+                        <button onClick={() => setType('teacher')} className={type === 'teacher' ? 'selected' : ''}>
+                            Учитель
+                        </button>
+                        <div className="login-line">|</div>
+                        <button onClick={() => setType('student')} className={type === 'student' ? 'selected' : ''}>
+                            Ученик
+                        </button>
                     </div>
+                    
                     <div className="input-menu-login">
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                         {
